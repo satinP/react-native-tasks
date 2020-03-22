@@ -49,11 +49,6 @@ class HomeState extends State<Home> {
             )
           ],
         ),
-        Text(
-          "Pode Entrar!",
-          style: TextStyle(
-              color: Colors.white, fontStyle: FontStyle.italic, fontSize: 30),
-        )
       ],
     );
   }
