@@ -25,13 +25,25 @@ export default class TaskList extends Component {
     }]
   }
 
+  toggleDoneTask = taskId => {
+    const clonedTasks = [...this.state.tasks]
+    console.log('taslkist',clonedTasks);
+    clonedTasks.forEach(task => {
+      if (task.id === taskId) {
+        task.doneDate = task.doneDate ? null : new Date();
+      } 
+    });
+
+    this.setState({tasks: clonedTasks});
+  }
+
   render() {
     const today = moment().locale('pt-br').format('ddd, D [de] MMMM');
 
     return (
       <View style={styles.container}>
         <ImageBackground source={todayImage} 
-                        style={styles.background}>
+                         style={styles.background}>
           <View style={styles.titleBar}>
             <Text style={styles.title}>
               Hoje
@@ -43,7 +55,8 @@ export default class TaskList extends Component {
         </ImageBackground>
         <View style={styles.taskList}>
           <FlatList data={this.state.tasks} keyExtractor={item => `${item.id}`} 
-                    renderItem={(obj) => <Task {...obj.item} />} />
+                    renderItem={(obj) => <Task {...obj.item} 
+                    toggleDoneTask={this.toggleDoneTask} />} />
         </View>
       </View>
     );
