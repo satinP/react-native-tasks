@@ -27,7 +27,7 @@ export default class TaskList extends Component {
 
   toggleDoneTask = taskId => {
     const clonedTasks = [...this.state.tasks]
-    console.log('taslkist',clonedTasks);
+    
     clonedTasks.forEach(task => {
       if (task.id === taskId) {
         task.doneDate = task.doneDate ? null : new Date();
