@@ -11,12 +11,14 @@ import moment from 'moment';
 import 'moment/locale/pt-br';
 
 import Task from '../components/Task';
+import AddTask from './AddTask'
 
 export default class TaskList extends Component {
 
   state = {
     showDoneTasks: true,
     visibleTasks:[],
+    showAddTaskModal: true,
     tasks:[{
       id: Math.random(),
       description: 'Descricao 1',
@@ -70,12 +72,15 @@ export default class TaskList extends Component {
 
     return (
       <View style={styles.container}>
+        <AddTask isVisible={this.state.showAddTaskModal}
+                 onCancel={() => this.setState({ showAddTaskModal: false }) }/>
         <ImageBackground source={todayImage} 
                          style={styles.background}>
           <View style={styles.iconBar}>
             <TouchableOpacity onPress={this.toggleShowDoneTask}>
               <Icon name={this.state.showDoneTasks ? 'eye' : 'eye-slash'}
-                    size={20} color={commonStyles.colors.secondary}/>
+                    size={20} 
+                    color={commonStyles.colors.secondary}/>
             </TouchableOpacity>
           </View>
           <View style={styles.titleBar}>
@@ -88,7 +93,8 @@ export default class TaskList extends Component {
           </View>
         </ImageBackground>
         <View style={styles.taskList}>
-          <FlatList data={this.state.visibleTasks} keyExtractor={item => `${item.id}`} 
+          <FlatList data={this.state.visibleTasks} 
+                    keyExtractor={item => `${item.id}`} 
                     renderItem={(obj) => <Task {...obj.item} 
                     toggleDoneTask={this.toggleDoneTask} />} />
         </View>
