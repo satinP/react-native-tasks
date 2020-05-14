@@ -56,11 +56,7 @@ export default class TaskList extends Component {
     if (this.state.showDoneTasks) {
       visibleTasks = [...this.state.tasks];
     } else {
-      /**
-       *  function (task) {
-       *    return task.doneDate === null;
-       *  }
-       */
+      
       const pending = task => task.doneDate === null;
 
       visibleTasks = this.state.tasks.filter(pending);
