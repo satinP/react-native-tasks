@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ImageBackground, StyleSheet, 
-         FlatList, TouchableOpacity, Platform } from 'react-native';
+         FlatList, TouchableOpacity, Platform,
+         Alert } from 'react-native';
 
 import commonStyles from '../commonStyles.js'
 import todayImage from '../../assets/imgs/today.jpg';
@@ -67,13 +68,31 @@ export default class TaskList extends Component {
     this.setState({visibleTasks});
   }
 
+  addTask = newTask => {
+    if(!newTask.description || !newTask.description.trim()) {
+       Alert.alert('Informações inválidas', 'Descrição não informada!');
+       return;
+    }
+
+    const tasks = [...this.state.tasks]
+    tasks.push({
+      id: Math.random(),
+      description: newTask.description,
+      estimatedDate: newTask.date,
+      doneDate: null,
+    });
+
+    this.setState({tasks, showAddTaskModal: false}, this.filterTasks);
+  }
+
   render() {
     const today = moment().locale('pt-br').format('ddd, D [de] MMMM');
 
     return (
       <View style={styles.container}>
         <AddTask isVisible={this.state.showAddTaskModal}
-                 onCancel={() => this.setState({ showAddTaskModal: false }) }/>
+                 onCancel={() => this.setState({ showAddTaskModal: false }) }
+                 onSaveTask={this.addTask}/>
         <ImageBackground source={todayImage} 
                          style={styles.background}>
           <View style={styles.iconBar}>
