@@ -85,6 +85,11 @@ export default class TaskList extends Component {
     this.setState({tasks, showAddTaskModal: false}, this.filterTasks);
   }
 
+  onDeleteTask = id => {
+    const tasks = this.state.tasks.filter(task => task.id !== id);
+    this.setState({tasks}, this.filterTasks);
+  }
+
   render() {
     const today = moment().locale('pt-br').format('ddd, D [de] MMMM');
 
@@ -115,7 +120,8 @@ export default class TaskList extends Component {
           <FlatList data={this.state.visibleTasks} 
                     keyExtractor={item => `${item.id}`} 
                     renderItem={(obj) => <Task {...obj.item} 
-                    toggleDoneTask={this.toggleDoneTask} />} />
+                    toggleDoneTask={this.toggleDoneTask} 
+                    onDeleteTask={this.onDeleteTask} />} />
         </View>
         <TouchableOpacity style={styles.addButton}
                           onPress={() => this.setState({showAddTaskModal: true})}

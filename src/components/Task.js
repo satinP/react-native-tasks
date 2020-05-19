@@ -19,7 +19,8 @@ export default props => {
 
   const getRightContent = () => {
     return (
-      <TouchableOpacity style={styles.rightSwipe}>
+      <TouchableOpacity style={styles.rightSwipe}
+                        onPress={() => {props.onDeleteTask && props.onDeleteTask(props.id)}}>
         <Icon name='trash' size={25} color='#FFF'/>
       </TouchableOpacity>
     );
