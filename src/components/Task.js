@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback,
+         TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 import moment from 'moment';
 import 'moment/locale/pt-br';
@@ -15,23 +17,33 @@ export default props => {
   const date = props.doneDate ? props.doneDate : props.estimatedDate;
   const formattedDate = moment(date).locale('pt-br').format('ddd, D [de] MMMM');
 
+  const getRightContent = () => {
+    return (
+      <TouchableOpacity style={styles.rightSwipe}>
+        <Icon name='trash' size={25} color='#FFF'/>
+      </TouchableOpacity>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={() => {props.toggleDoneTask(props.id)}}>
-        <View style={styles.checkContainer}>
-          {getCheckView(props.doneDate)}
+    <Swipeable renderRightActions={getRightContent}>
+      <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={() => {props.toggleDoneTask(props.id)}}>
+          <View style={styles.checkContainer}>
+            {getCheckView(props.doneDate)}
+          </View>
+        </TouchableWithoutFeedback>
+        <View>
+          <Text style={[styles.description, styleDoneOrNot]}>
+            {props.description}
+          </Text>
+          <Text style={styles.date}>
+            {formattedDate}
+          </Text>
         </View>
-      </TouchableWithoutFeedback>
-      <View>
-        <Text style={[styles.description, styleDoneOrNot]}>
-          {props.description}
-        </Text>
-        <Text style={styles.date}>
-          {formattedDate}
-        </Text>
+        {/* <Text>{props.doneDate + ""}</Text> */}
       </View>
-      {/* <Text>{props.doneDate + ""}</Text> */}
-    </View>
+    </Swipeable>
   );  
 }
 
@@ -44,8 +56,7 @@ function getCheckView(doneDate) {
     );
   } else {
     return (
-      <View style={styles.pending}>
-      </View>
+      <View style={styles.pending} />
     );
   }
 }
@@ -89,4 +100,11 @@ const styles = StyleSheet.create({
     color: commonStyles.colors.subText,
     fontSize: 12,
   },
+  rightSwipe: {
+    backgroundColor: 'red',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingHorizontal: 20
+  }
 });
