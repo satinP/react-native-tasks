@@ -30,11 +30,12 @@ export default class AddTask extends Component {
   }
   
   getDatePicker = () => {
-    let datePicker = <DateTimePicker value={this.state.date}
-                           onChange={(_, date) => {this.setState({date, showDatePicker: false})}}
-                           mode='date'
-                           display='calendar' />
+    let datePicker = <DateTimePicker  value={this.state.date}
+                                      onChange={(_, date) => {this.setState({date, showDatePicker: false})}}
+                                      mode='date'
+                                      display='calendar' />
     const dateString = moment(this.state.date).format('ddd, D [de] MMMM [de] YYYY');
+    
     if (Platform.OS === 'android') {
       datePicker = (
         <View>

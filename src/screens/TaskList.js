@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, ImageBackground, StyleSheet, 
          FlatList, TouchableOpacity, Platform,
          Alert } from 'react-native';
-
     
 import AsyncStorage from '@react-native-community/async-storage';
 
