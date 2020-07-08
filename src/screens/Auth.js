@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { ImageBackground, Text, StyleSheet, View, 
-         TextInput, TouchableOpacity, Platform } from 'react-native';
+import { ImageBackground, Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 
 import backgroundImage from '../../assets/imgs/login.jpg';
 import commonStyles from '../commonStyles';
+import AuthInput from '../components/AuthInput';
 
 export default class Auth extends Component {
 
@@ -34,16 +34,16 @@ export default class Auth extends Component {
             {this.state.isNewUser ? 'Crie sua conta' : 'Login'}
           </Text>
           {this.state.isNewUser &&
-            <TextInput placeholder='Nome' value={this.state.name} style={styles.input} 
+            <AuthInput icon='user' placeholder='Nome' value={this.state.name} style={styles.input} 
                        onChangeText={name => this.setState({name})}/>
           }
-          <TextInput placeholder='E-mail' value={this.state.email} style={styles.input} 
+          <AuthInput icon='at' placeholder='E-mail' value={this.state.email} style={styles.input} 
                      onChangeText={email => this.setState({email})}/>
-          <TextInput placeholder='Senha' value={this.state.password} style={styles.input} 
+          <AuthInput icon='lock' placeholder='Senha' value={this.state.password} style={styles.input} 
                      onChangeText={password => this.setState({password})} secureTextEntry={true}/>
           {this.state.isNewUser &&
-            <TextInput placeholder='Confirme a senha' value={this.state.confirmPassword} style={styles.input} 
-                       onChangeText={confirmPassword => this.setState({confirmPassword})}/>
+            <AuthInput icon='asterisk' placeholder='Confirme a senha' value={this.state.confirmPassword} 
+                       style={styles.input} onChangeText={confirmPassword => this.setState({confirmPassword})}/>
           }
           
           <TouchableOpacity onPress={this.signinOrSignup}>
@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
   input: {
     marginTop: 10,
     backgroundColor: '#FFF',
-    padding: Platform.OS === 'ios' ? 15 : 10,
     borderRadius: 15
   },
   container: {
