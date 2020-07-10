@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { ImageBackground, Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 
+import axios from 'axios';
+
 import backgroundImage from '../../assets/imgs/login.jpg';
 import commonStyles from '../commonStyles';
 import AuthInput from '../components/AuthInput';
 
+import { server, showError, showSuccess } from '../common';
 export default class Auth extends Component {
 
   state = {
@@ -17,9 +20,24 @@ export default class Auth extends Component {
 
   signinOrSignup = () => {
     if ( this.state.isNewUser ) {
-
+      this.signUp();
     } else {
 
+    }
+  }
+
+  signUp = async () => {
+    try {
+      await axios.post(`${server}/signup`, {
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password
+      });
+
+      showSuccess('Usuario cadastrado');
+      this.setState({isNewUser: false});
+    } catch(e) {
+      showError(e);
     }
   }
 
@@ -42,7 +60,7 @@ export default class Auth extends Component {
           <AuthInput icon='lock' placeholder='Senha' value={this.state.password} style={styles.input} 
                      onChangeText={password => this.setState({password})} secureTextEntry={true}/>
           {this.state.isNewUser &&
-            <AuthInput icon='asterisk' placeholder='Confirme a senha' value={this.state.confirmPassword} 
+            <AuthInput icon='asterisk' placeholder='Confirme a senha' value={this.state.confirmPassword} secureTextEntry={true}
                        style={styles.input} onChangeText={confirmPassword => this.setState({confirmPassword})}/>
           }
           
