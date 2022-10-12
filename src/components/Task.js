@@ -41,8 +41,7 @@ export default props => {
           <Text style={styles.date}>
             {formattedDate}
           </Text>
-        </View>
-        {/* <Text>{props.doneDate + ""}</Text> */}
+        </View>     
       </View>
     </Swipeable>
   );  
@@ -52,7 +51,7 @@ function getCheckView(doneDate) {
   if ( doneDate != null ) {
     return (
       <View style={styles.done}>
-        <Icon name='check' size={20} color='#FFF' />
+        <Icon name='check' size={20} color='green' />
       </View>
     );
   } else {
